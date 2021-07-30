@@ -138,3 +138,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+data/
+exported_data/
+model/
+plots/
+venv/
+.idea
