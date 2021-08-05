@@ -132,6 +132,7 @@ class ConvertData:
                     embedding_matrix[i] = embedding_vector
 
         print(embedding_matrix)
+        np.savetxt(EXPORTED_VECTORS_LOC, embedding_matrix)
         # Load pre-trained word embeddings into an embedding layer
         # Set trainable = False to keep the embeddings fixed
         self.embedding_layer = Embedding(num_words,
