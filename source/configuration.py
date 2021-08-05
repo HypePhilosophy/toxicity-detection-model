@@ -21,3 +21,5 @@ DETECTION_CLASSES = [
     'neutral']
 MODEL_LOC = '../model/comments_toxicity.h5'
 TOKENIZER_LOC = '../model/tokenizer.pickle'
+CLEANED_TRAIN_DATA_LOC = '../exported_data/train_cleaned.csv'
+
