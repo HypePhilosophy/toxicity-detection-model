@@ -64,7 +64,6 @@ class ConvertData:
                 # converting word_vec into numpy array
                 # adding it in the word_to_vector dictionary
                 word_to_vector[word] = np.asarray(word_vec, dtype='float32')
-
                 # print(f'Word to: {word_to_vector[word]}')
 
         # Print the total words found
@@ -90,6 +89,7 @@ class ConvertData:
         # Split the data into feature and target labels
         comments = data['comment_text'].values
         self.target_classes = data[DETECTION_CLASSES].values
+        np.savetxt(EXPORTED_WEIGHTS_LOC, self.target_classes, delimiter=',', fmt='%s')
 
         print(f'Tokenizer Exists: {do_load_existing_tokenizer}')
         if not do_load_existing_tokenizer:
@@ -120,7 +120,7 @@ class ConvertData:
         # TODO: check whether to choose post or pre padding
         self.padded_data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
         print('Shape of Data Tensor:', self.padded_data.shape)
-
+        np.savetxt(EXPORTED_PAD_SEQUENCES_LOC, self.padded_data, delimiter=',', fmt='% 4d')
         # Construct and Prepare Embedding matrix
         num_words = min(MAX_VOCAB_SIZE, len(word_to_index) + 1)
         embedding_matrix = np.zeros((num_words, EMBEDDING_DIMENSION))
@@ -131,8 +131,7 @@ class ConvertData:
                     # words not found in embedding index will be all zeros.
                     embedding_matrix[i] = embedding_vector
 
-        print(embedding_matrix)
-        np.savetxt(EXPORTED_VECTORS_LOC, embedding_matrix)
+        np.savetxt(EXPORTED_VECTORS_LOC, embedding_matrix, delimiter=',', fmt='%f')
         # Load pre-trained word embeddings into an embedding layer
         # Set trainable = False to keep the embeddings fixed
         self.embedding_layer = Embedding(num_words,
@@ -149,7 +148,6 @@ def upload_cleaned_csv(content):
 
 def execute():
     training_data = pd.read_csv(TRAINING_DATA_LOC)
-    # upload_cleaned_csv(training_data)
     ConvertData(training_data, cleaned=True)
 
 

@@ -23,4 +23,5 @@ MODEL_LOC = '../model/comments_toxicity.h5'
 TOKENIZER_LOC = '../model/tokenizer.pickle'
 CLEANED_TRAIN_DATA_LOC = '../exported_data/train_cleaned.csv'
 EXPORTED_VECTORS_LOC = '../exported_data/exported_vectors.csv'
-
+EXPORTED_PAD_SEQUENCES_LOC = '../exported_data/exported_pad_sequences.csv'
+EXPORTED_WEIGHTS_LOC = '../exported_data/exported_weights.csv'
