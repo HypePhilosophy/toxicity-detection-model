@@ -36,7 +36,6 @@ def test_phrase():
 
     result = make_prediction(phrase)
     print(result)
-    print('foo')
     test_phrase()
 
 # Press the green button in the gutter to run the script.

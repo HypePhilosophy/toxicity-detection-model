@@ -137,7 +137,6 @@ def clean_text_column(text_column):
 
     global row_count
     row_count = len(text_column.index)
-
     return text_column.apply(lambda x: clean_text(x))
 
 
@@ -166,6 +165,7 @@ def clean_text(text):
     text = lemmatise(text)
 
     text_count += 1
+
     print(f'Cleaned Word Count: {text_count}/{row_count}', end='\r')
 
     return text
