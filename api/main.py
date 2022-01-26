@@ -1,16 +1,20 @@
 # -------------------------------------------------------------------------
 #                           Import Libraries
 # -------------------------------------------------------------------------
+from flask import Flask, request
+from flask_restful import Resource, Api
 from prediction.make_prediction import make_prediction
 from source.data_filtering import *
 from spellchecker import SpellChecker
-
 import wordninja
 
-spell = SpellChecker()
 # -------------------------------------------------------------------------
 #                           Functions
 # -------------------------------------------------------------------------
+# Initialize App
+app = Flask(__name__)
+api = Api(app)
+spell = SpellChecker()
 
 
 def infer_spaces(text):
@@ -27,20 +31,25 @@ def filter_text(text):
     return " ".join(spell.correction(word) for word in orig_words)
 
 
-def test_phrase():
-    phrase = input("Enter test phrase here: ").lstrip()
+class Predictions(Resource):
 
-    phrase = filter_text(phrase)
-    phrase = infer_spaces(phrase)
-    print(phrase)
+    def post(self):
+        # Get the data from the request
+        text = request.form['text']
+        phrase = text.lstrip()
 
-    result = make_prediction(phrase)
-    print(result)
-    test_phrase()
+        phrase = filter_text(phrase)
+        phrase = infer_spaces(phrase)
+        print(phrase)
 
-# Press the green button in the gutter to run the script.
+        result = make_prediction(phrase)
+        print(result)
+        return {'data': result}, 200
 
+    pass
+
+
+api.add_resource(Predictions, '/predictions')
 
 if __name__ == '__main__':
-    test_phrase()
-
+    app.run(host="0.0.0.0", port=5000, debug=False)
